@@ -12,7 +12,7 @@ local frozen = {}
 -- Check Moon Cats every frame
 RunService.Heartbeat:Connect(function()
     for _, obj in ipairs(Workspace:GetDescendants()) do
-        if obj:IsA("Model") and obj.Name:lower():match("moon") and not frozen[obj] then
+        if obj:IsA("Model") and obj.Name:lower():match("moon") and obj:FindFirstChildWhichIsA("BasePart")
             local primary = obj.PrimaryPart or obj:FindFirstChildWhichIsA("BasePart")
             if primary and obj:IsDescendantOf(Workspace) then
                 -- Wait for placement to finish (small movement tolerance)

@@ -1,11 +1,12 @@
--- ✅ FINAL Moon Cat Freeze Script for Delta / Synapse / Fluxus / KRNL
+-- ✅ FINAL Moon Cat Freeze Script (Hosted as rider.lua)
+-- Use: loadstring(game:HttpGet("https://raw.githubusercontent.com/nard134/eh/main/rider.lua", true))()
 
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
 local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 
--- Function to get all "Moon Cat" models in workspace
+-- Function to find all Moon Cats in the game
 local function getMoonCats()
     local found = {}
     for _, obj in ipairs(Workspace:GetDescendants()) do
@@ -19,7 +20,7 @@ local function getMoonCats()
     return found
 end
 
--- Continuously refreeze all Moon Cats every frame
+-- Refreeze all Moon Cats every frame
 RunService.Heartbeat:Connect(function()
     local moonCats = getMoonCats()
     for _, data in ipairs(moonCats) do

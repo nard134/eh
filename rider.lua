@@ -56,4 +56,4 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
-print("🧊 Waiting for Moon Cat with ID:",14235123-ab50-494e-a086-6658979ef111)
+print("🧊 Waiting for Moon Cat with ID:", 14235123-ab50-494e-a086-6658979ef111)

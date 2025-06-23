@@ -1,26 +1,32 @@
--- FINAL Moon Cat Freeze Script (Freeze Even After Placement)
+-- ✅ Moon Cat Freeze Script (Dynamic & Optimized)
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
 
-local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
 
--- Find all Moon Cats and freeze them in place
+-- Stores frozen moon cats with updated positions
+local frozen = {}
+
 RunService.Heartbeat:Connect(function()
     for _, obj in ipairs(Workspace:GetDescendants()) do
         if obj:IsA("Model") and obj.Name:lower():find("moon cat") then
             local primary = obj.PrimaryPart or obj:FindFirstChild("HumanoidRootPart") or obj:FindFirstChildWhichIsA("BasePart")
             if primary and obj:IsDescendantOf(Workspace) then
-                local freezeCFrame = primary.CFrame
+                -- Freeze only once per Moon Cat
+                if not frozen[obj] then
+                    frozen[obj] = primary.CFrame
+                    print("❄️ Freezing Moon Cat at:", tostring(primary.Position))
+                end
 
                 -- Reapply freeze every frame
-                for _, part in ipairs(obj:GetDescendants()) do
-                    if part:IsA("BasePart") then
-                        part.Anchored = true
-                        part.CFrame = freezeCFrame
-                        part.Velocity = Vector3.zero
-                        part.RotVelocity = Vector3.zero
-                    elseif part:IsA("AlignPosition") or part:IsA("BodyGyro") or part:IsA("BodyVelocity") or part:IsA("Motor6D") then
-                        part:Destroy() -- remove any movers
+                for _, p in ipairs(obj:GetDescendants()) do
+                    if p:IsA("BasePart") then
+                        p.Anchored = true
+                        p.CFrame = frozen[obj]
+                        p.Velocity = Vector3.zero
+                        p.RotVelocity = Vector3.zero
+                    elseif p:IsA("AlignPosition") or p:IsA("BodyGyro") or p:IsA("BodyVelocity") or p:IsA("Motor6D") then
+                        p:Destroy()
                     end
                 end
             end
@@ -28,4 +34,4 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
-print("✅ Moon Cats are now frozen in place — even after planting.")
+print("✅ Moon Cat Freeze ACTIVE — All placed Moon Cats will stay frozen.")
